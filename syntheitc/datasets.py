@@ -51,7 +51,7 @@ class BA_Train(InMemoryDataset):
         for i in range(num_nodes):
             x[i] = nx.degree(G, i)
             
-        FFM_matrix = torch.load(os.path.join(self.raw_dir, 'FFM-1->1024.pt'))
+        FFM_matrix = torch.load(os.path.join(self.raw_dir, 'FFM-1-_1024.pt'))
         x_proj = (2. * np.pi * x) @ FFM_matrix.T
         x = np.concatenate([np.sin(x_proj), np.cos(x_proj)], axis=1)
         x = torch.FloatTensor(x)
@@ -137,7 +137,7 @@ class BA_Test(InMemoryDataset):
         for i in range(num_nodes):
             x[i] = nx.degree(G, i)
             
-        FFM_matrix = torch.load(os.path.join(self.raw_dir, 'FFM-1->1024.pt'))
+        FFM_matrix = torch.load(os.path.join(self.raw_dir, 'FFM-1-_1024.pt'))
         x_proj = (2. * np.pi * x) @ FFM_matrix.T
         x = np.concatenate([np.sin(x_proj), np.cos(x_proj)], axis=1)
         x = torch.FloatTensor(x)

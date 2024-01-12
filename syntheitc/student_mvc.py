@@ -20,7 +20,7 @@ def train():
     config_file = open('./config.yaml', 'r')
     config = yaml.safe_load(config_file.read())
     
-    device = torch.device('cuda:1' if torch.cuda.is_available() else 'cpu')
+    device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
     
     logger.info('Loading dataset...')
     dataset = BA_Train(root=config['dataset_path'])

@@ -20,7 +20,7 @@ def train():
     config_file = open('./config.yaml', 'r')
     config = yaml.safe_load(config_file.read())
     
-    device = torch.device('cuda:1' if torch.cuda.is_available() else 'cpu')
+    device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
     
     logger.info('Loading dataset...')
     dataset = Cora(root=config['dataset_path'])
@@ -86,7 +86,7 @@ def train():
         logger.info('Epoch: [{}/{}] loss_train: {:.4f} acc_train: {:.4f} acc_val: {:.4f}'.format(epoch + 1, epochs, loss_train, acc_train, acc_val))
         if acc_val > acc_best:
             acc_best = acc_val
-            # torch.save({'model': model.encoder_s.state_dict(), 'weights': updated_weights}, config['student']['ckpt_path']['MVC'])
+            torch.save({'model': model.encoder_s.state_dict(), 'weights': updated_weights}, config['student']['ckpt_path']['MVC'])
             logger.info('Acc_best is updated to {:.4f}. Model checkpoint is saved to {}'.format(acc_best, config['student']['ckpt_path']['MVC']))
             acc_test = model.test(data)
             logger.info('Test accuracy is {:.4f}'.format(acc_test))
