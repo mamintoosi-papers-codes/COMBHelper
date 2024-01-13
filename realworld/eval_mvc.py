@@ -44,6 +44,7 @@ if __name__ == '__main__':
     y = data.y
     preds = out.argmax(dim=-1)
     recall = recall_score(y_true=y, y_pred=preds)
+    logger.info('Teacher Model:')
     logger.info('recall: {:.4f}'.format(recall))
     acc_test = int((preds == y).sum()) / len(y)
     logger.info('acc_test: {:.4f}'.format(acc_test))
@@ -67,6 +68,7 @@ if __name__ == '__main__':
     y = data.y
     preds = out.argmax(dim=-1)
     recall = recall_score(y_true=y, y_pred=preds.tolist())
+    logger.info('Student Model:')
     logger.info('recall: {:.4f}'.format(recall))
     acc_test = int((preds == y).sum()) / len(y)
     logger.info('acc_test: {:.4f}'.format(acc_test))

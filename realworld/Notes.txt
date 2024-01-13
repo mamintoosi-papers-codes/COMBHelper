@@ -2,3 +2,5 @@
 student_mvc
 kd_loss = self.KD_loss(out_s, out_t)
 به وسراستین
+https://dfdazac.github.io/sinkhorn.html
+https://www.kernel-operations.io/geomloss/index.html

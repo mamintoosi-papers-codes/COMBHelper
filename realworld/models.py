@@ -3,6 +3,7 @@ import torch.nn as nn
 from torch_geometric.nn import SAGEConv
 import torch.nn.functional as F
 import numpy as np
+from geomloss import SamplesLoss
 # import torch_directml
 
 # def select_device(device=''):
@@ -135,6 +136,18 @@ class StudentModel(nn.Module):
         out_t = F.softmax(out_t / self.T, dim=-1)
         return F.kl_div(out_s, out_t, reduction='sum') * (self.T ** 2) / out_s.shape[0]
     
+    
+    def wasserstein_loss(self, out_s, out_t):
+        # Define a Sinkhorn (~Wasserstein) loss between sampled measures
+        out_s = F.log_softmax(out_s / self.T, dim=-1)
+        out_t = F.softmax(out_t / self.T, dim=-1)
+        loss = SamplesLoss(loss="sinkhorn", p=2, blur=.05)
+        return loss(out_s, out_t)
+
+        # out_s = F.log_softmax(out_s / self.T, dim=-1)
+        # out_t = F.softmax(out_t / self.T, dim=-1)
+        # return torch.mean(out_s * out_t) / (self.T ** 2)
+
     def forward(self, data, weights):
         out_s = self.encoder_s(data)
         with torch.no_grad():
@@ -154,8 +167,10 @@ class StudentModel(nn.Module):
             clf_loss = (F.nll_loss(out_s, y, reduction='none') * weights).sum()
         else:
             clf_loss = F.nll_loss(out_s, y)
-        
-        loss_train = self.alpha * clf_loss + self.beta * kd_loss
+        # print(out_s.shape, y.shape)
+        wass_loss = self.wasserstein_loss(out_s, out_t)
+        # SamplesLoss("sinkhorn", p=2, blur=0.01)
+        loss_train = self.alpha * clf_loss + self.beta * kd_loss + 0.001*wass_loss
         return loss_train, acc_train
     
     @torch.no_grad()
