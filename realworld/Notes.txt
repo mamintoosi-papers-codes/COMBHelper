@@ -1,0 +1,4 @@
+تغییر تابع هزینه در 
+student_mvc
+kd_loss = self.KD_loss(out_s, out_t)
+به وسراستین

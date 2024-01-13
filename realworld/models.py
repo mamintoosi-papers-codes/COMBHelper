@@ -3,8 +3,20 @@ import torch.nn as nn
 from torch_geometric.nn import SAGEConv
 import torch.nn.functional as F
 import numpy as np
+# import torch_directml
 
-
+# def select_device(device=''):
+#     if device.lower() == 'cuda':
+#         if not torch.cuda.is_available():
+#             print ("torch.cuda not available")
+#             return torch.device('cpu')    
+#         else:
+#             return torch.device('cuda:0')
+#     if device.lower() == 'dml':
+#         return torch_directml.device(torch_directml.default_device())
+#     else:
+#         return torch.device('cpu')
+    
 # 4 layers
 class GCN1(nn.Module):
     def __init__(self, in_channels, hidden_channels, out_channels):

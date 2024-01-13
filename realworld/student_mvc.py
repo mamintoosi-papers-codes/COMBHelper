@@ -3,7 +3,7 @@ import yaml
 import torch
 import torch.optim as optim
 from datasets import Cora
-from models import GCN1, StudentModel
+from models import GCN1, StudentModel #, select_device
 
 
 def train():
@@ -21,6 +21,7 @@ def train():
     config = yaml.safe_load(config_file.read())
     
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+    # device = select_device('dml')
     
     logger.info('Loading dataset...')
     dataset = Cora(root=config['dataset_path'])
