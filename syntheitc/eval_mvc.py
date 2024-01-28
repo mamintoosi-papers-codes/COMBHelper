@@ -27,8 +27,9 @@ if __name__ == '__main__':
     data = dataset[0].to(device, 'x', 'edge_index', 'y')
     
     # teacher
-    # checkpoint = torch.load(config['teacher']['ckpt_path']['MVC'])
-    checkpoint = torch.load(config['teacher']['best_ckpt_path']['MVC']) # best
+    checkpoint = torch.load(config['teacher']['ckpt_path']['MVC'])
+    # M. Amintoosi
+    # checkpoint = torch.load(config['teacher']['best_ckpt_path']['MVC']) # best
     encoder = GCN1(
         in_channels=config['teacher']['in_channels'],
         hidden_channels=config['teacher']['hidden_channels'],
@@ -49,8 +50,8 @@ if __name__ == '__main__':
     # pickle.dump({'pred': preds.tolist()}, f)
     
     # student
-    # checkpoint = torch.load(config['student']['ckpt_path']['MVC'])
-    checkpoint = torch.load(config['student']['best_ckpt_path']['MVC']) # best
+    checkpoint = torch.load(config['student']['ckpt_path']['MVC'])
+    # checkpoint = torch.load(config['student']['best_ckpt_path']['MVC']) # best
     encoder = GCN1(
         in_channels=config['student']['in_channels'],
         hidden_channels=config['student']['hidden_channels'],

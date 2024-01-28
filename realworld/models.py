@@ -168,9 +168,9 @@ class StudentModel(nn.Module):
         else:
             clf_loss = F.nll_loss(out_s, y)
         # print(out_s.shape, y.shape)
-        wass_loss = self.wasserstein_loss(out_s, out_t)
+        # wass_loss = self.wasserstein_loss(out_s, out_t)
         # SamplesLoss("sinkhorn", p=2, blur=0.01)
-        loss_train = self.alpha * clf_loss + self.beta * kd_loss + 0.001*wass_loss
+        loss_train = self.alpha * clf_loss + self.beta * kd_loss #+ 0.001*wass_loss
         return loss_train, acc_train
     
     @torch.no_grad()
